@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Klub-Mobile-App</string>
+    <string name="welcome_to_klub">Welcome to KlubMobile</string>
+    <string name="welcome_message">Join over 50 people who use KlubMobile to talk with communities and friends and planned events</string>
 </resources>
