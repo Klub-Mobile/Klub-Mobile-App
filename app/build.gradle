@@ -48,6 +48,11 @@ android {
         }
     }
     applicationVariants.all { variant ->
+        variant.addJavaSourceFoldersToModel(
+                new File(buildDir, "generated/ksp/${variant.name}/kotlin")
+        )
+    }
+    applicationVariants.all { variant ->
         kotlin.sourceSets {
             getByName(variant.name) {
                 kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
