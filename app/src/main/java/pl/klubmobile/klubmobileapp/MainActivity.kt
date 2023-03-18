@@ -65,36 +65,39 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun BottomNavBar(navController: NavHostController) {
     BottomNavigation {
-        BottomNavItem.values().forEach { destination ->
-            val isCurrentDestOnBackStack = navController.isRouteOnBackStack(destination.direction)
-            BottomNavigationItem(
-                icon = { Icon(destination.icon, contentDescription = destination.label) },
-                label = { Text(text = destination.label) },
-                selected = isCurrentDestOnBackStack,
-                onClick = {
-                    if (isCurrentDestOnBackStack) {
-                        // When we click again on a bottom bar item and it was already selected
-                        // we want to pop the back stack until the initial destination of this bottom bar item
-                        navController.popBackStack(destination.direction.route, false)
-                        return@BottomNavigationItem
-                    }
-                    navController.navigate(destination.direction.route) {
-                        // Pop up to the root of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(NavGraphs.root.route) {
-                            saveState = true
-                        }
+        BottomNavItem.values()
+            .forEach { destination ->
+                val isCurrentDestOnBackStack = navController
 
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
+                    .isRouteOnBackStack(destination.direction)
+                BottomNavigationItem(
+                    icon = { Icon(destination.icon, contentDescription = destination.label) },
+                    label = { Text(text = destination.label) },
+                    selected = isCurrentDestOnBackStack,
+                    onClick = {
+                        if (isCurrentDestOnBackStack) {
+                            // When we click again on a bottom bar item and it was already selected
+                            // we want to pop the back stack until the initial destination of this bottom bar item
+                            navController.popBackStack(destination.direction.route, false)
+                            return@BottomNavigationItem
+                        }
+                        navController.navigate(destination.direction.route) {
+                            // Pop up to the root of the graph to
+                            // avoid building up a large stack of destinations
+                            // on the back stack as users select items
+                            popUpTo(NavGraphs.root.route) {
+                                saveState = true
+                            }
+
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
+                            launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
+                            restoreState = true
+                        }
                     }
-                }
-            )
-        }
+                )
+            }
     }
 }
 
