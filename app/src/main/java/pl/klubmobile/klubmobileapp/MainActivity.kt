@@ -30,36 +30,40 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             KlubMobileAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    val engine = rememberNavHostEngine()
-                    val navController = engine.rememberNavController()
-                    val startRoute = NavGraphs.root.startRoute
+                MainScreen()
+            }
+        }
+    }
 
-                    navController.currentBackStackEntryAsState().value?.print()
+    @Composable
+    private fun MainScreen() {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            val engine = rememberNavHostEngine()
+            val navController = engine.rememberNavController()
+            val startRoute = NavGraphs.root.startRoute
 
-                    Scaffold(
-                        bottomBar = { BottomNavbar(navController) }
-                    ) { contentPadding ->
-                        DestinationsNavHost(
-                            engine = engine,
-                            navController = navController,
-                            navGraph = NavGraphs.root,
-                            modifier = Modifier.padding(contentPadding),
-                            startRoute = startRoute
-                        )
-                    }
-                }
+            navController.currentBackStackEntryAsState().value?.print()
+
+            Scaffold(
+                bottomBar = { BottomNavBar(navController) }
+            ) { contentPadding ->
+                DestinationsNavHost(
+                    engine = engine,
+                    navController = navController,
+                    navGraph = NavGraphs.root,
+                    modifier = Modifier.padding(contentPadding),
+                    startRoute = startRoute
+                )
             }
         }
     }
 }
 
 @Composable
-private fun BottomNavbar(navController: NavHostController) {
+private fun BottomNavBar(navController: NavHostController) {
     BottomNavigation {
         BottomNavItem.values().forEach { destination ->
             val isCurrentDestOnBackStack = navController.isRouteOnBackStack(destination.direction)
@@ -103,6 +107,6 @@ private fun NavBackStackEntry.print(prefix: String = "stack") {
 @Composable
 fun DefaultPreview() {
     KlubMobileAppTheme {
-        BottomNavbar(NavHostController(LocalContext.current))
+        BottomNavBar(NavHostController(LocalContext.current))
     }
 }
