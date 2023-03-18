@@ -68,7 +68,6 @@ private fun BottomNavBar(navController: NavHostController) {
         BottomNavItem.values()
             .forEach { destination ->
                 val isCurrentDestOnBackStack = navController
-
                     .isRouteOnBackStack(destination.direction)
                 BottomNavigationItem(
                     icon = { Icon(destination.icon, contentDescription = destination.label) },
